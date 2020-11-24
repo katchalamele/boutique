@@ -26,21 +26,24 @@
 			</li>
 		</ul>
 		{#
-				<form class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2" type="text" placeholder="Search">
-					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-				</form>
-		        #}
+														<form class="form-inline my-2 my-lg-0">
+															<input class="form-control mr-sm-2" type="text" placeholder="Search">
+															<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+														</form>
+												        #}
 		<ul class="navbar-nav">
-			<li class="nav-item">
-				<a href="#" class="nav-link">Inscription</a>
-			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link btn btn-success">Se connecter</a>
-			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link btn btn-danger">Déconnexion</a>
-			</li>
+			{% if app.user %}
+				<li class="nav-item">
+					<a href="{{ path('security_logout') }}" class="nav-link btn btn-danger">Déconnexion</a>
+				</li>
+			{% else %}
+				<li class="nav-item">
+					<a href="#" class="nav-link">Inscription</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('security_login') }}" class="nav-link btn btn-success">Se connecter</a>
+				</li>
+			{% endif %}
 		</ul>
 	</div>
 </nav>

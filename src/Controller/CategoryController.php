@@ -47,6 +47,9 @@ class CategoryController extends AbstractController
     public function edit($id, Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->find($id);
+
+        //$this->denyAccessUnlessGranted('CAN_EDIT', $category);
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
