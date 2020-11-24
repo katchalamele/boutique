@@ -36,7 +36,7 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
-        if (!$product) $this->createNotFoundException('Le produit demandé n\'existe pas :(');
+        if (!$product) throw $this->createNotFoundException('Le produit demandé n\'existe pas :(');
 
         return $this->render('product/show.html.twig', [
             'product' => $product
@@ -77,6 +77,9 @@ class ProductController extends AbstractController
     public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em)
     {
         $product = $productRepository->find($id);
+
+        if (!$product) throw $this->createNotFoundException('Ce produit n\'existe pas');
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

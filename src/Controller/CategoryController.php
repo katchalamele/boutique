@@ -48,6 +48,9 @@ class CategoryController extends AbstractController
     {
         $category = $categoryRepository->find($id);
 
+        if (!$category) throw $this->createNotFoundException('Cette catécorie n\'existe pas');
+
+
         //$this->denyAccessUnlessGranted('CAN_EDIT', $category);
 
         $form = $this->createForm(CategoryType::class, $category);

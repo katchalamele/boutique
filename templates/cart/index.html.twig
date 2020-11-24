@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier
+{% endblock %}
+
+{% block body %}
+	<h1>Votre panier</h1>
+
+	{% if items | length > 0 %}
+		<table class="table">
+			<thead>
+				<th>Produit</th>
+				<th>Prix</th>
+				<th>Quantité</th>
+				<th>Total</th>
+				<th></th>
+			</thead>
+			<tbody>
+				{% for item in items %}
+					<tr>
+						<td>
+							<a href="{{ path('product_show', {category_slug:item.product.category.slug, slug:item.product.slug}) }}">
+								{{ item.product.name }}
+							</a>
+						</td>
+						<td>{{ item.product.price / 100}}
+							&euro;</td>
+						<td>
+							<a href="{{ path('cart_decrement', {id:item.product.id}) }}" class="btn btn-primary btn-sm">
+								<i class="fas fa-minus"></i>
+							</a>
+							{{ item.count}}
+							<a href="{{ path('cart_add', {id:item.product.id}) }}" class="btn btn-primary btn-sm">
+								<i class="fas fa-plus"></i>
+							</a>
+						</td>
+						<td>{{ item.total / 100}}
+							&euro;
+						</td>
+						<td>
+							<a href="{{ path('cart_delete', {id:item.product.id}) }}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<td colspan="3"></td>
+					<td>{{ total / 100 }}
+						&euro;
+					</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	{% else %}
+		<h3>Le panier est vide !</h3>
+	{% endif %}
+{% endblock %}

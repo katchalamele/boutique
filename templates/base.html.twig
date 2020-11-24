@@ -13,12 +13,25 @@
 	</head>
 	<body>
 		{% include "shared/_navbar.html.twig" %}
-		<div class="container pt-5"> {% block body %}{% endblock %}
-			</div>
-			{% block javascripts %}
-				<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-			{% endblock %}
-		</body>
-	</html>
+		<div class="container pt-5">
+			{% for severity, messages in app.flashes %}
+				<div class="alert alert-{{ severity }} alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<ul>
+						{% for message in messages %}
+							<li>
+								<strong>{{ message }}</strong>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endfor %}
+			{% block body %}{% endblock %}
+		</div>
+		{% block javascripts %}
+			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		{% endblock %}
+	</body>
+</html>
