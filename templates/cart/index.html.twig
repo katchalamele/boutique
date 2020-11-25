@@ -9,11 +9,13 @@
 	{% if items | length > 0 %}
 		<table class="table">
 			<thead>
-				<th>Produit</th>
-				<th>Prix</th>
-				<th>Quantité</th>
-				<th>Total</th>
-				<th></th>
+				<tr>
+					<th>Produit</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+					<th>Total</th>
+					<th></th>
+				</tr>
 			</thead>
 			<tbody>
 				{% for item in items %}
@@ -53,6 +55,30 @@
 				</tr>
 			</tbody>
 		</table>
+		{% if app.user %}
+			<h2>Passer la commande</h2>
+			{{ form_start(formView, {'action': path('purchase_confirm')}) }}
+
+			{{ form_widget(formView) }}
+
+			<button type="submit" class="btn btn-success">
+				Passer la commande
+			</button>
+
+			{{ form_end(formView) }}
+		{% else %}
+			<p>
+
+				<a href="{{ path('security_login') }}">
+					Connectez-vous
+				</a>
+				pour passer la commande.
+			</p>
+			<p>
+				Pas encore inscrit?
+				<a href="#">Creez un compte</a>.
+			</p>
+		{% endif %}
 	{% else %}
 		<h3>Le panier est vide !</h3>
 	{% endif %}

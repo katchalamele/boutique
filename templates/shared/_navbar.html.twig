@@ -21,9 +21,6 @@
 					<a class="dropdown-item" href="#">Tous les produits</a>
 				</div>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">À Propos</a>
-			</li>
 		</ul>
 
 		<ul class="navbar-nav">
@@ -36,6 +33,9 @@
 				</a>
 			</li>
 			{% if app.user %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('purchase_index') }}">Mes commandes</a>
+				</li>
 				<li class="nav-item">
 					<a href="{{ path('security_logout') }}" class="nav-link btn btn-danger">Déconnexion</a>
 				</li>

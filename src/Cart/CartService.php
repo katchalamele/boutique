@@ -56,6 +56,9 @@ class CartService
         }
     }
 
+    /**
+     * @return CartItem[]
+     */
     public function getCartItems(): array
     {
         $items = [];
@@ -84,5 +87,10 @@ class CartService
             $total +=  $cartItem->getTotal();
         }
         return $total;
+    }
+
+    public function emptyCart()
+    {
+        $this->saveCart([]);
     }
 }
