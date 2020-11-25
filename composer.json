@@ -14,6 +14,7 @@
         "fzaninotto/faker": "^1.9",
         "liorchamla/faker-prices": "^1.0",
         "mbezhanov/faker-provider-collection": "^1.2",
+        "stripe/stripe-php": "^7.66",
         "symfony/console": "5.1.*",
         "symfony/debug-bundle": "5.1.*",
         "symfony/dotenv": "5.1.*",

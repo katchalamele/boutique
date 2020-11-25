@@ -19,6 +19,8 @@ class PurchasesListController extends AbstractController
         /** @var User */
         $user = $this->getUser();
 
+        //dd($user->getPurchases());
+
         return $this->render('purchase/index.html.twig', [
             'purchases' => $user->getPurchases()
         ]);

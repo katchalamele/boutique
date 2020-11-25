@@ -93,4 +93,9 @@ class CartService
     {
         $this->saveCart([]);
     }
+
+    public function isEmpty(): bool
+    {
+        return count($this->getCart()) === 0;
+    }
 }
