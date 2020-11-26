@@ -32,10 +32,10 @@
         "symfony/web-profiler-bundle": "5.1.*",
         "symfony/yaml": "5.1.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "sensio/framework-extra-bundle": "5.2"
     },
-    "require-dev": {
-    },
+    "require-dev": {},
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
