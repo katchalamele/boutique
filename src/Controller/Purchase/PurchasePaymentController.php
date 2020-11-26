@@ -40,7 +40,7 @@ class PurchasePaymentController extends AbstractController
 
         $intent = $stripeService->getPaymentIntent($purchase);
 
-        $this->addFlash('warning', 'Attention ceci est un formulaire de paiement de test, ne renseignez pas les information de votre carte de paiement.');
+        $this->addFlash('warning', 'Attention ceci est un formulaire de paiement de test, ne renseignez pas les informations de votre carte de paiement.');
         $this->addFlash('info', 'Essayez avec ces fausses informations: N°carte: 4242 4242 4242 4242 | EXP: 04/24 | CVC: 242 | codePostale: 42424');
         return $this->render('purchase/payment.html.twig', [
             'clientSecret' => $intent->client_secret,
