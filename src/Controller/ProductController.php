@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProductController extends AbstractController
 {
@@ -96,5 +97,26 @@ class ProductController extends AbstractController
             'product' => $product,
             'formView' => $formView
         ]);
+    }
+
+    /**
+     * @Route("/product/index", name="product_index")
+     */
+    public function index(ProductRepository $productRepository)
+    {
+        $products = $productRepository->findAll();
+        shuffle($products);
+        return $this->render('product/index.html.twig', [
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * @Route("/product/delete/{id}", name="product_delete", requirements={"id":"\d+"})
+     * @isGranted("ROLE_SUPER_ADMIN", message="Vous devez être super admin pour supprimer un produit")
+     */
+    public function delete($id)
+    {
+        # code...
     }
 }

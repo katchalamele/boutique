@@ -1,20 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategoryController!{% endblock %}
+{% block title %}Liste des catégories
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Master/Documents/projets/comSym/src/Controller/CategoryController.php'|file_link(0) }}">src/Controller/CategoryController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Master/Documents/projets/comSym/templates/category/index.html.twig'|file_link(0) }}">templates/category/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<h1>
+		Liste des catégories
+	</h1>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('category_create') }}" class="btn btn-success mb-3">
+			<i class="fas fa-plus"></i>
+			Ajouter une catégorie
+		</a>
+	{% endif %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Catégorie</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categories %}
+				<tr>
+					<td>
+						{{ category.name }}
+					</td>
+					<td class="text-center">
+						<a href="{{ path('product_category', {slug:category.name}) }}" title="Voir la liste des produits" class="text-success btn btn-link">
+							<i class="fas fa-eye fa-lg"></i>
+						</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('category_edit', {id:category.id}) }}" title="Modifier la catégorie" class="text-warning btn btn-link">
+								<fa class="fas fa-edit fa-lg"></fa>
+							</a>
+							<a href="{{ path('category_delete', {id:category.id}) }}" title="Supprimer la catégorie" class="text-danger btn btn-link">
+								<fa class="fas fa-trash fa-lg"></fa>
+							</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

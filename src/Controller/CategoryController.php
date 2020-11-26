@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class CategoryController extends AbstractController
 {
@@ -70,5 +71,24 @@ class CategoryController extends AbstractController
             'category' => $category,
             'formView' => $formView
         ]);
+    }
+
+    /**
+     * @Route("/cartegory/index", name="category_index")
+     */
+    public function index(CategoryRepository $categoryRepository)
+    {
+        return $this->render('category/index.html.twig', [
+            'categories' => $categoryRepository->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/category/delete/{id}", name="category_delete", requirements={"id":"\d+"})
+     * @isGranted("ROLE_SUPER_ADMIN", message="Vous devez être super admin pour supprimer un produit")
+     */
+    public function delete($id)
+    {
+        # code...
     }
 }

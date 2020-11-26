@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+	<h1>Inscription</h1>
+
+	<div class="row">
+		<div class="col-6 mx-auto shadow p-5 rounded">
+			{{ form_start(formView) }}
+
+			{{ form_widget(formView) }}
+
+			<button type="submit" class="btn btn-success">S'inscrire</button>
+
+			{{ form_end(formView) }}
+		</div>
+	</div>
+{% endblock %}
