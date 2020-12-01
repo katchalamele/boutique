@@ -60,7 +60,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setSlug(strtolower($sluggerInterface->slug($product->getName())));
+            //$product->setSlug(strtolower($sluggerInterface->slug($product->getName())));
             $em->persist($product);
             $em->flush();
 

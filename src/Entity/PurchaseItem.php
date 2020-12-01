@@ -74,6 +74,10 @@ class PurchaseItem
     {
         $this->purchase = $purchase;
 
+        if (!$this->purchase->getPurchaseItems()->contains($this)) {
+            $this->purchase->addPurchaseItem($this);
+        }
+
         return $this;
     }
 

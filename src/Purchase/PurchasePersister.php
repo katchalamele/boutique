@@ -24,9 +24,7 @@ class PurchasePersister
     public function store(Purchase $purchase)
     {
         $purchase
-            ->setUser($this->security->getUser())
-            ->setPurchasedAt(new \DateTime())
-            ->setTotal($this->cartService->getTotal());
+            ->setUser($this->security->getUser());
 
         foreach ($this->cartService->getCartItems() as $cartItem) {
             $purchaseItem = new PurchaseItem;
