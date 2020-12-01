@@ -4,12 +4,14 @@ namespace App\Controller\Purchase;
 
 use App\Entity\Purchase;
 use App\Cart\CartService;
+use App\Event\PaymentSuccessEvent;
 use App\Repository\PurchaseRepository;
 use App\Stripe\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PurchasePaymentController extends AbstractController
 {
@@ -53,7 +55,7 @@ class PurchasePaymentController extends AbstractController
      * @Route("/purchase/pay/{id}/success", name="purchase_payment_success", requirements={"id":"\d+"})
      * @IsGranted("ROLE_USER", message="Vous devez d'abord vous connecter")
      */
-    public function success($id)
+    public function success($id, EventDispatcherInterface $eventDispatcher)
     {
         $purchase = $this->purchaseRepository->find($id);
         if (!$purchase || ($purchase->getUser() !== $this->getUser()) || ($purchase->getStatus() === Purchase::STATUS_PAID)) {
@@ -64,6 +66,9 @@ class PurchasePaymentController extends AbstractController
         $purchase->setStatus(Purchase::STATUS_PAID);
         $this->em->flush();
         $this->cartService->emptyCart();
+
+        $paymentEvent = new PaymentSuccessEvent($purchase);
+        $eventDispatcher->dispatch($paymentEvent, 'payment.success');
 
         $this->addFlash('success', 'Votre payement s\'est effectué avec succès');
         return $this->redirectToRoute('purchase_index');
