@@ -27,7 +27,7 @@
 						{{ category.name }}
 					</td>
 					<td class="text-center">
-						<a href="{{ path('product_category', {slug:category.name}) }}" title="Voir la liste des produits" class="text-success btn btn-link">
+						<a href="{{ path('product_category', {slug:category.slug}) }}" title="Voir la liste des produits" class="text-success btn btn-link">
 							<i class="fas fa-eye fa-lg"></i>
 						</a>
 						{% if is_granted('ROLE_ADMIN') %}
