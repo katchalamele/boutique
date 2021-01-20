@@ -7,9 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ApiResource(
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"},
+ *      normalizationContext={"groups"={"read:product"}},
+ *      paginationItemsPerPage=5
+ * )
  */
 class Product
 {
@@ -17,19 +25,21 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:product", "read:category"})
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le nom du produit est obligatoire")
      * @Assert\Length(min=3, max=255, minMessage="Le nom du produit doit faire au moins 3 caractères")
+     * @Groups({"read:product", "read:category"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank(message="Le prix est obligatoire")
+     * @Groups({"read:product", "read:category"})
      */
     private $price;
 
@@ -40,6 +50,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
+     * @Groups({"read:product"})
      */
     private $category;
 
@@ -47,6 +58,7 @@ class Product
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="L'URL de l'image est obligatoire")
      * @Assert\Url(message="L'URL de l'image doit être une URL valide")
+     * @Groups({"read:product", "read:category"})
      */
     private $mainPicture;
 
@@ -54,6 +66,7 @@ class Product
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="La description est obligatoire")
      * @Assert\Length(min=20, minMessage="La description doit au moins faire 20 Caractères")
+     * @Groups({"read:product", "read:category"})
      */
     private $shortDescription;
 

@@ -7,9 +7,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ApiResource(
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"},
+ *      normalizationContext={"groups"={"read:category"}},
+ * )
  */
 class Category
 {
@@ -17,6 +24,7 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:product", "read:category"})
      */
     private $id;
 
@@ -24,6 +32,7 @@ class Category
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le nom de la catégorie est obligatoire")
      * @Assert\Length(min=3, max=255, minMessage="Le nom de la catégorie doit faire au moins 3 caractères")
+     * @Groups({"read:product", "read:category"})
      */
     private $name;
 
