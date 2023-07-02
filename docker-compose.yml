@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: ./docker/web
+    volumes:
+      - ./:/var/www/boutique
+      - ./docker/web/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+    ports:
+      - 80:80
