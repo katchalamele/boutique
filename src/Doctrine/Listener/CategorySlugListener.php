@@ -17,7 +17,17 @@ class CategorySlugListener
 
     public function prePersist(Category $category)
     {
-        if (empty($category->getSlug())) {
+        $this->setSlug($category);
+    }
+
+    public function preUpdate(Category $category)
+    {
+        $this->setSlug($category);
+    }
+
+    private function setSlug(Category $category)
+    {
+        if (!empty($category->getName())) {
             $category->setSlug(strtolower($this->slugger->slug($category->getName())));
         }
     }

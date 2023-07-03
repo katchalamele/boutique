@@ -17,16 +17,20 @@ class ProductSlugListener
 
     public function prePersist(Product $product, LifecycleEventArgs $event)
     {
-        /*
-        $entity = $event->getObject();
+        $this->setSlug($product);
+    }
 
-        if (!$entity instanceof Product) {
-            return;
-        }
-        */
+    public function preUpdate(Product $product, LifecycleEventArgs $event)
+    {
+        $this->setSlug($product);
+    }
 
-        if (empty($product->getSlug())) {
+    private function setSlug(Product $product)
+    {
+        if (!empty($product->getName())) {
             $product->setSlug(strtolower($this->slugger->slug($product->getName())));
         }
     }
+
+
 }

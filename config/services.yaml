@@ -39,7 +39,11 @@ services:
             $publicKey: "%env(STRIPE_PUBLIC_KEY)%"
     
     App\Doctrine\Listener\ProductSlugListener:
-        tags: [{name: 'doctrine.orm.entity_listener', event: prePersist, entity: App\Entity\Product}]
+        tags:
+            - {name: 'doctrine.orm.entity_listener', event: prePersist, entity: App\Entity\Product}
+            - {name: 'doctrine.orm.entity_listener', event: preUpdate, entity: App\Entity\Product}
 
     App\Doctrine\Listener\CategorySlugListener:
-        tags: [{name: 'doctrine.orm.entity_listener', event: prePersist, entity: App\Entity\Category}]
+        tags: 
+            - {name: 'doctrine.orm.entity_listener', event: prePersist, entity: App\Entity\Category}
+            - {name: 'doctrine.orm.entity_listener', event: preUpdate, entity: App\Entity\Category}
