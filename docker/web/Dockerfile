@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_sqlite
 
+RUN a2enmod rewrite
+
 # Install composer
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 RUN mkdir /var/composer

@@ -2,6 +2,8 @@ version: '3'
 services:
   web:
     build: ./docker/web
+    env_file:
+      - .env.local
     volumes:
       - ./:/var/www/boutique
       - ./docker/web/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
